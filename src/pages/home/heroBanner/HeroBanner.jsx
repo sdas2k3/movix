@@ -14,14 +14,12 @@ const HeroBanner = () => {
     const navigate = useNavigate();
     const { url } = useSelector((state) => state.home);
     const { data, loading } = useFetch("/movie/upcoming");
-    const [title, setTitle] = useState("");
+
     useEffect(() => {
-        const link = data?.results?.[Math.floor(Math.random() * 20)];
         const bg =
-            url.backdrop +link?.backdrop_path;
+            url.backdrop +
+            data?.results?.[Math.floor(Math.random() * 20)]?.backdrop_path;
         setBackground(bg);
-        // console.log(bg);
-        setTitle(link?.original_title);
     }, [data]);
 
     const searchQueryHandler = (event) => {
@@ -37,11 +35,11 @@ const HeroBanner = () => {
                     <Img src={background} />
                 </div>
             )}
-            
+
             <div className="opacity-layer"></div>
             <ContentWrapper>
                 <div className="heroBannerContent">
-                    <span className="title">Welcome</span>
+                    <span className="title">Welcome.</span>
                     <span className="subTitle">
                         Millions of movies, TV shows and people to discover.
                         Explore now.
@@ -53,11 +51,12 @@ const HeroBanner = () => {
                             onChange={(e) => setQuery(e.target.value)}
                             onKeyUp={searchQueryHandler}
                         />
-                        <button>Search</button>
+                        <button onClick={() => {
+                            console.log("Clicked")
+                            query.length&&navigate(`/search/${query}`)
+                        }}>Search</button>
                     </div>
                 </div>
-                {/* <div className="watchButton">Watch {title}</div> */}
-                
             </ContentWrapper>
         </div>
     );
