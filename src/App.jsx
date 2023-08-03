@@ -67,7 +67,6 @@ function App() {
             </Routes>
             <Footer />
         </BrowserRouter>
-        {/* <div>Hello World</div> */}
         </>
        
     );
